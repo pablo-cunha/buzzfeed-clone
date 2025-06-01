@@ -1,11 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { QuizService } from '../../services/quiz.service';
+import { Question } from '../../models/question';
+import { ResultComponent } from '../result/result.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-quiz',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, ResultComponent],
   templateUrl: './quiz.component.html',
-  styleUrl: './quiz.component.css'
+  styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent {
+export class QuizComponent implements OnInit {
+  questions: Question[] = [];
+  currentQuestionIndex = 0;
+  showResult = false;
+  resultHouse = '';
 
+  constructor(private quizService: QuizService) {}
+
+  ngOnInit() {
+    this.questions = this.quizService.getQuestions();
+  }
+
+  answer(house: string) {
+    this.quizService.saveAnswer(house);
+    this.currentQuestionIndex++;
+    if (this.currentQuestionIndex >= this.questions.length) {
+      this.showResult = true;
+      this.resultHouse = this.quizService.getResult();
+    }
+  }
+
+  restart() {
+    this.quizService.resetQuiz();
+    this.currentQuestionIndex = 0;
+    this.showResult = false;
+    this.resultHouse = '';
+  }
 }

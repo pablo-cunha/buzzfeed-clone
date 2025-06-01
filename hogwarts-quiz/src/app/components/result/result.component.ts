@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-result',
-  imports: [],
   templateUrl: './result.component.html',
-  styleUrl: './result.component.css'
+  styleUrls: ['./result.component.css']
 })
 export class ResultComponent {
+  @Input() house = '';
+  @Output() restartQuiz = new EventEmitter<void>();
 
+  restart() {
+    this.restartQuiz.emit();
+  }
 }

@@ -1,1 +1,19 @@
-<p>quiz works!</p>
+<div class="app-wrapper">
+  <div class="quiz-header">
+    <h1>BuzzFeed</h1>
+    <p>De qual casa de Hogwarts você faria parte?</p>
+  </div>
+  <div class="quiz-container">
+    <div *ngIf="!showResult; else resultBlock">
+      <h2>{{ questions[currentQuestionIndex].question }}</h2>
+      <div class="options">
+        <button *ngFor="let option of questions[currentQuestionIndex].options" (click)="answer(option.house)">
+          {{ option.text }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-template #resultBlock>
+    <app-result [house]="resultHouse" (restartQuiz)="restart()"></app-result>
+  </ng-template>
+</div>
