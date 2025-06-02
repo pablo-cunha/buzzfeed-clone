@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { ResultComponent } from './components/result/result.component';
 
+/*
+  Componente principal da aplicação.
+  Contêiner para o quiz e o resultado.
+*/
+
 @Component({
   selector: 'app-root',
   standalone: true,

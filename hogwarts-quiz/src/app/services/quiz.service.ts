@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Question } from '../models/question';
 
+// Serviço que fornece perguntas e calcula o resultado.
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
+  // Array de perguntas do quiz.
   private questions: Question[] = [
   {
     question: 'Qual dessas qualidades você mais valoriza?',
@@ -53,22 +55,27 @@ export class QuizService {
   }
 ];
 
+  // Array de respostas fornecidas pelo usuário.
   private answers: string[] = [];
 
+  // Retorna lista de questões.
   getQuestions(): Question[] {
     return this.questions;
   }
 
+  // Armazena resposta do usuário.
   saveAnswer(house: string) {
     this.answers.push(house);
   }
 
+  // Calcula e retorna a casa do usuário (a mais selecionada pelas respostas).
   getResult(): string {
     const counts: { [key: string]: number } = {};
     this.answers.forEach(house => counts[house] = (counts[house] || 0) + 1);
     return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
   }
 
+  // Reseta o quiz, zerando as respostas do usuário.
   resetQuiz() {
     this.answers = [];
   }
